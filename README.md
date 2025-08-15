@@ -19,7 +19,7 @@ O projeto será dividido em quatro etapas, com as seguintes datas de entrega:
 
 O projeto está sendo desenvolvido pelos seguintes alunos:
 
-* Luiz Gabriel
-* Letícia de Souza
-* Marcos Paulo
-* Paulo Victor
+* Luiz Gabriel Antunes Sena (**22401905**)
+* Letícia Souza de Souza (**22450212**)
+* Marcos Paulo Vieira Pedrosa (**22401906**)
+* Paulo Victor Fernandes de Melo (**22400653**)
