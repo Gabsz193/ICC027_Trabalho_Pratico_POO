@@ -23,3 +23,21 @@ O projeto está sendo desenvolvido pelos seguintes alunos:
 * Letícia Souza de Souza (**22450212**)
 * Marcos Paulo Vieira Pedrosa (**22401906**)
 * Paulo Victor Fernandes de Melo (**22400653**)
+
+## Problemática
+
+Universidade precisa gerenciar restaurantes universitários para direcionar o recurso financeiro para as empresas que os alunos consumiram.
+
+---
+
+## User Story de Exemplo
+
+* A Universidade quer registrar empresas autorizadas
+* A Empresa quer cadastrar seus restaurantes na universidade com autorização da universidade
+* A Empresa quer saber a receita mensal
+* O Aluno quer comprar tickets de comida
+* O Aluno quer usar o ticket para resgatar comida
+* O Aluno quer visualizar o cardápio da semana
+* O Administrador do Restaurante quer cadastrar a comida da semana
+
+---
