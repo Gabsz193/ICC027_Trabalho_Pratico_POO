@@ -18,7 +18,7 @@ import java.util.Set;
  * </ul>
  */
 public abstract class Consumivel {
-    private String id;
+    private Long id;
     private String nome;
     private String descricao;
     private Set<String> alergenos;
@@ -48,7 +48,7 @@ public abstract class Consumivel {
     /**
      * @return Um ID único do consumível.
      */
-    public String getId() { return id; };
+    public Long getId() { return id; };
 
     /**
      * @return O nome do consumível, da forma que deve ser mostrado em uma interface.

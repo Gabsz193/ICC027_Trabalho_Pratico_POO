@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Refeicao {
-    private String id;
+    private Long id;
     private String nome;
     private List<Consumivel> consumiveis;
 
@@ -24,7 +24,7 @@ public class Refeicao {
     /**
      * @return Um ID único da refeição.
      */
-    public String getId() { return id; };
+    public Long getId() { return id; };
 
     /**
      * @return O nome da refeição, da forma que deve ser mostrado em uma interface.
