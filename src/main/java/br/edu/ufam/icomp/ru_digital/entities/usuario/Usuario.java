@@ -12,6 +12,14 @@ public class Usuario {
 
     @Column(nullable = false)
     private String nome;
+    public String email;
+    private int cpf;
+    private String senha;
+    public enum nivelPermissao{
+        Baixo,
+        Medio,
+        Alto
+    };
 
     public Usuario() {
     }
