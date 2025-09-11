@@ -1,6 +1,6 @@
 package br.edu.ufam.icomp.ru_digital.entities.unidade;
 
-import br.edu.ufam.icomp.ru_digital.entities.unidade.Ticket;
+import br.edu.ufam.icomp.ru_digital.entities.unidade.Ticket.TipoRefeicao;
 import jakarta.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
