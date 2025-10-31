@@ -23,7 +23,7 @@ public class Cronograma {
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "tipo_refeicao")
     @Column(name = "refeicoes_semana")
-    private Map<TipoRefeicao, String[]> dias = new HashMap<>();
+    private Map<TipoRefeicao, String[]> dias = new HashMap();
 
     // Construtores
     public Cronograma() {

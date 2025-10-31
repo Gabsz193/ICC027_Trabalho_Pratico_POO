@@ -24,16 +24,28 @@ import java.util.Set;
 @DiscriminatorColumn(name = "tipo_consumivel", discriminatorType = DiscriminatorType.STRING)
 public abstract class Consumivel {
 
+    /**
+     * Um identificador único do consumível.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * O nome humanamente legível do consumível.
+     */
     @Column(nullable = false)
     private String nome;
 
+    /**
+     * Uma breve descrição do consumível.
+     */
     @Column(length = 500)
     private String descricao;
 
+    /**
+     * Um conjunto de ingredientes possívelmente alérgenos.
+     */
     @ElementCollection
     @CollectionTable(name = "consumivel_alergenos", joinColumns = @JoinColumn(name = "consumivel_id"))
     @Column(name = "alergeno")

@@ -1,7 +1,7 @@
 package br.edu.ufam.icomp.ru_digital.entities.funcionario.model;
 
 import br.edu.ufam.icomp.ru_digital.entities.cargo.model.Cargo;
-import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
+import br.edu.ufam.icomp.ru_digital.entities.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class Funcionario extends Usuario {
         this.cargos = new ArrayList<>();
     }
 
-    public Funcionario(String nome, String cpf, String email, String matricula) {
-        super(nome, cpf, email, matricula);
+    public Funcionario(String nome, String cpf, String email) {
+        super(nome, cpf, email);
         this.cargos = new ArrayList<>();
     }
 

@@ -2,7 +2,7 @@ package br.edu.ufam.icomp.ru_digital.entities.refeicao;
 
 import br.edu.ufam.icomp.ru_digital.entities.consumivel.Consumivel;
 import br.edu.ufam.icomp.ru_digital.entities.unidade.model.Unidade;
-import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
+import br.edu.ufam.icomp.ru_digital.entities.usuario.Usuario;
 import jakarta.persistence.*;
 import org.springframework.lang.NonNull;
 

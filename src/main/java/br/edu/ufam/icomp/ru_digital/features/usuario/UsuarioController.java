@@ -1,6 +1,6 @@
 package br.edu.ufam.icomp.ru_digital.features.usuario;
 
-import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
+import br.edu.ufam.icomp.ru_digital.entities.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

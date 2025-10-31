@@ -1,6 +1,6 @@
 package br.edu.ufam.icomp.ru_digital.features.usuario;
 
-import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
+import br.edu.ufam.icomp.ru_digital.entities.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,6 @@ public class UsuarioService {
             usuario.setNome(usuarioAtualizado.getNome());
             usuario.setCpf(usuarioAtualizado.getCpf());
             usuario.setEmail(usuarioAtualizado.getEmail());
-            usuario.setMatricula(usuarioAtualizado.getMatricula());
             usuario.setSaldoCentavos(usuarioAtualizado.getSaldoCentavos());
             return usuarioRepository.save(usuario);
         });

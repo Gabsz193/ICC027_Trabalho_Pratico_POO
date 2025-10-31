@@ -4,90 +4,99 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-@Inheritance(strategy = InheritanceType.JOINED) // permite herança (ex.: Consumidor)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
-
+    /**
+     * O ID único do usuário.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * O nome real do usuario.
+     */
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false, unique = true, length = 11)
+    /**
+     * O CPF válido do usuário.
+     */
+    @Column(unique = true, nullable = false)
     private String cpf;
 
+    /**
+     * O e-mail de contato do usuário.
+     */
+    @Column(unique = true, nullable = false)
+    private String email;
+
     @Column(nullable = false)
-    private String senha;
+    private Long saldoCentavos = 0L;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private NivelPermissao nivelPermissao = NivelPermissao.BAIXO;
-
-    // Enum interna ou pode ser movida para um arquivo separado
-    public enum NivelPermissao {
-        BAIXO,
-        MEDIO,
-        ALTO
-    }
-
-    // Construtores
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String cpf, String senha, NivelPermissao nivelPermissao) {
+    public Usuario(String nome, String cpf, String email) {
         this.nome = nome;
-        this.email = email;
         this.cpf = cpf;
-        this.senha = senha;
-        this.nivelPermissao = nivelPermissao;
-    }
-
-    // Getters e Setters (Encapsulamento)
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+        this.saldoCentavos = 0L;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
+    /**
+     * @return O ID único do usuário.
+     */
+    public Long getId() { return id; }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
-    public String getSenha() {
-        return senha;
-    }
+    /**
+     * Atualiza o ID do usuário.
+     * @param id O novo ID único do usuário.
+     */
+    public void setId(Long id) { this.id = id; }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+    /**
+     * @return O nome real do usuário.
+     */
+    public String getNome() { return nome; }
 
-    public NivelPermissao getNivelPermissao() {
-        return nivelPermissao;
-    }
+    /**
+     * Atualiza o nome do usuário.
+     * @param nome O nome novo real do usuário.
+     */
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setNivelPermissao(NivelPermissao nivelPermissao) {
-        this.nivelPermissao = nivelPermissao;
-    }
+    /**
+     * @return O CPF válido do usuário.
+     */
+    public String getCpf() { return cpf; }
+
+    /**
+     * Atualiza o CPF de um usuário.
+     * @param cpf Um novo CPF válido.
+     */
+    public void setCpf(String cpf) { this.cpf = cpf; }
+
+    /**
+     * @return O e-mail de contato do usuário.
+     */
+    public String getEmail() { return email; }
+
+    /**
+     * Atualiza o e-mail do usuário.
+     * @param email O novo e-mail do usuário.
+     */
+    public void setEmail(String email) { this.email = email; }
+
+    /**
+     * @return O saldo do usuário em centavos.
+     */
+    public Long getSaldoCentavos() { return saldoCentavos; }
+
+    /**
+     * Atualiza o saldo do usuário.
+     * @param saldoCentavos O saldo do usuário, em centavos.
+     */
+    public void setSaldoCentavos(Long saldoCentavos) { this.saldoCentavos = saldoCentavos; }
 }
