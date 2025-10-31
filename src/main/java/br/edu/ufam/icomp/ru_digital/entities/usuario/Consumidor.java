@@ -1,15 +1,13 @@
 package br.edu.ufam.icomp.ru_digital.entities.usuario;
 
 import br.edu.ufam.icomp.ru_digital.entities.ticket.model.Ticket;
+import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
 import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "consumidor")
-public class Consumidor extends Usuario2 {
-
-    @OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Ticket> tickets = new ArrayList<>();
+public class Consumidor extends Usuario {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -30,16 +28,12 @@ public class Consumidor extends Usuario2 {
         super();
     }
 
-    public Consumidor(String nome, String email, String cpf, String senha, NivelPermissao nivelPermissao, TipoConsumidor tipo) {
-        super(nome, email, cpf, senha, nivelPermissao);
+    public Consumidor(String nome, String email, String cpf, String senha, TipoConsumidor tipo) {
+        super(nome, email, cpf, senha);
         this.tipo = tipo;
     }
 
     // Getters e Setters
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
     public TipoConsumidor getTipo() {
         return tipo;
     }
