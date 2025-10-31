@@ -5,20 +5,9 @@ import br.edu.ufam.icomp.ru_digital.entities.unidade.Ticket;
 import jakarta.persistence.*;
 import java.util.*;
 
-@Entity
-@Table(name = "consumidor")
 public class Consumidor extends Usuario {
-
-    @OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Ticket> tickets = new ArrayList<>();
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private TipoConsumidor tipo;
-
-    @ElementCollection
-    @CollectionTable(name = "consumidor_alergenos", joinColumns = @JoinColumn(name = "consumidor_id"))
-    @Column(name = "alergeno")
+    private List<Ticket> tickets = new ArrayList<>();
     private Set<String> alergenos = new HashSet<>();
 
     public enum TipoConsumidor {
@@ -51,9 +40,5 @@ public class Consumidor extends Usuario {
 
     public Set<String> getAlergenos() {
         return alergenos;
-    }
-
-    public void setAlergenos(Set<String> alergenos) {
-        this.alergenos = alergenos;
     }
 }

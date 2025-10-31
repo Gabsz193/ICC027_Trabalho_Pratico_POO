@@ -41,3 +41,24 @@ Universidade precisa gerenciar restaurantes universitários para direcionar o re
 * O Administrador do Restaurante quer cadastrar a comida da semana
 
 ---
+
+# Classes
+
+## Unidade
+
+## Administrador Geral
+* Pode criar/deletar unidades;
+* Pode autorizar o cadastro de um administrador de unidades;
+* Pode atualizar as unidades de responsabilidade de um administrador de unidades;
+
+## Administrador de Unidades
+* Pode gerir várias unidades;
+* Pode atualizar as informações da unidade;
+* Pode cadastrar funcionários nas unidades que gerencia;
+* Pode ver os relatórios das unidades que gerencia;
+* Pode modificar o cronograma de refeições da semana;
+* Pode criar/atualizar/deletar as refeições da unidade;
+  - Consequentemente, pode criar/atualizar/deletar consumíveis;
+
+## Consumidor
+* Pode verificar se um consumível tem

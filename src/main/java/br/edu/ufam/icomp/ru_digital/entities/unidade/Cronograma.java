@@ -1,48 +1,36 @@
 package br.edu.ufam.icomp.ru_digital.entities.unidade;
 
+import br.edu.ufam.icomp.ru_digital.entities.refeicao.Refeicao;
 import br.edu.ufam.icomp.ru_digital.entities.unidade.Ticket.TipoRefeicao;
-import jakarta.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
 
-@Entity
-@Table(name = "cronograma")
+import java.util.*;
+
 public class Cronograma {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    // Aqui, guardamos o cronograma como um Map<TipoRefeicao, String[]>
-    // onde o array de 7 posições representa os dias da semana
-    @ElementCollection
-    @CollectionTable(
-            name = "cronograma_dias",
-            joinColumns = @JoinColumn(name = "cronograma_id")
-    )
-    @MapKeyEnumerated(EnumType.STRING)
-    @MapKeyColumn(name = "tipo_refeicao")
-    @Column(name = "refeicoes_semana")
-    private Map<TipoRefeicao, String[]> dias = new HashMap<>();
+    private Map<TipoRefeicao, ArrayList<Refeicao>> refeicoes;
 
     // Construtores
     public Cronograma() {
+        this.refeicoes = new HashMap<>();
     }
 
-    public Cronograma(Map<TipoRefeicao, String[]> dias) {
-        this.dias = dias;
+    // Consulta refeição por dia da semana atual
+    public Optional<Refeicao> consultarRefeicao(TipoRefeicao tipo) {
+        var calendar = Calendar.getInstance();
+        var diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+        return this.consultarRefeicao(tipo, diaSemana - 1);
+    }
+
+    // Consulta refeição por dia da semana específico
+    public Optional<Refeicao> consultarRefeicao(TipoRefeicao tipo, int diaSemana) {
+        var semana = refeicoes.get(tipo);
+        if (semana == null || semana.size() <= diaSemana)
+            return Optional.empty();
+
+        return Optional.of(semana.get(diaSemana));
     }
 
     // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public Map<TipoRefeicao, String[]> getDias() {
-        return dias;
-    }
-
-    public void setDias(Map<TipoRefeicao, String[]> dias) {
-        this.dias = dias;
+    public Map<TipoRefeicao, ArrayList<Refeicao>> getRefeicoes() {
+        return refeicoes;
     }
 }

@@ -18,7 +18,7 @@ public class AdminGeral extends Usuario {
         super(nome, email, cpf, senha, NivelPermissao.ALTO);
     }
 
-    /*
+
     // Métodos de negócio
     public void autorizarAdminUnidade(Usuario admin) {
         if (admin == null) {
@@ -42,5 +42,5 @@ public class AdminGeral extends Usuario {
         // Aqui normalmente chamaríamos um serviço ou repositório
         System.out.println("Unidade removida: " + unidade.getNome());
     }
-     */
+
 }

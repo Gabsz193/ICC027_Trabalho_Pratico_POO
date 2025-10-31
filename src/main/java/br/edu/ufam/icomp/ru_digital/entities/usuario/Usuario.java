@@ -2,29 +2,15 @@ package br.edu.ufam.icomp.ru_digital.entities.usuario;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "usuario")
-@Inheritance(strategy = InheritanceType.JOINED) // permite herança (ex.: Consumidor)
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String nome;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
-
-    @Column(nullable = false)
     private String senha;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private NivelPermissao nivelPermissao = NivelPermissao.BAIXO;
 
     // Enum interna ou pode ser movida para um arquivo separado
@@ -35,15 +21,14 @@ public class Usuario {
     }
 
     // Construtores
-    public Usuario() {
-    }
+    public Usuario() {}
 
     public Usuario(String nome, String email, String cpf, String senha, NivelPermissao nivelPermissao) {
-        this.nome = nome;
-        this.email = email;
-        this.cpf = cpf;
-        this.senha = senha;
-        this.nivelPermissao = nivelPermissao;
+        setNome(nome);
+        setEmail(email);
+        setCpf(cpf);
+        setSenha(senha);
+        setNivelPermissao(nivelPermissao);
     }
 
     // Getters e Setters (Encapsulamento)
@@ -51,28 +36,46 @@ public class Usuario {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getCpf()  { return cpf; }
+    public void setCpf(String cpf) {
+        if (cpf == null)
+            throw new IllegalArgumentException("O CPF não pode ser nulo.");
+
+        // Filtrar apenas números
+        int[] digitos = cpf.chars()
+                .filter(Character::isDigit)
+                .map(x -> Character.digit(x, 10))
+                .toArray();
+
+        if (digitos.length != 11)
+            throw new IllegalArgumentException("O CPF é inválido");
+
+        // Calcular dígitos verificadores
+        int[] verif = { 0, 0 };
+        for (int i = 0; i < 9; i++) {
+            verif[0] += (10 - i) * digitos[i];
+            verif[1] += (11 - i) * digitos[i];
+        }
+        verif[1] += 2 * digitos[9];
+
+        // Verificar dígitos finais
+        for (int j = 0; j < 2; j++) {
+            int resto = verif[j] % 11;
+            verif[j] = (resto < 2) ? (0) : (11 - resto);
+
+            if (digitos[9 + j] != verif[j])
+                throw new IllegalArgumentException("O CPF é inválido");
+        }
+
+        this.cpf = cpf;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
+    public String getEmail() { return email; }
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getSenha() {
