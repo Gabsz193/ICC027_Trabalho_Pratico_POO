@@ -59,6 +59,24 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/{id}/saldo/adicionar")
+    public ResponseEntity<Usuario> adicionarSaldo(@PathVariable Long id, @RequestParam Long valor) {
+        Usuario usuario = usuarioService.adicionarSaldo(id, valor);
+        return ResponseEntity.ok(usuario);
+    }
+
+    @PostMapping("/{id}/saldo/debitar")
+    public ResponseEntity<Usuario> debitarSaldo(@PathVariable Long id, @RequestParam Long valor) {
+        Usuario usuario = usuarioService.debitarSaldo(id, valor);
+        return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping("/{id}/saldo")
+    public ResponseEntity<Long> consultarSaldo(@PathVariable Long id) {
+        Long saldo = usuarioService.consultarSaldo(id);
+        return ResponseEntity.ok(saldo);
+    }
+
     // Endpoints legados mantidos para compatibilidade
     @GetMapping("/usuario")
     public Optional<Usuario> getUsuario(@RequestParam String nome) {

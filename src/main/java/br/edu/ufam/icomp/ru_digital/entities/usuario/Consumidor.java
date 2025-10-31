@@ -1,13 +1,12 @@
 package br.edu.ufam.icomp.ru_digital.entities.usuario;
 
-import br.edu.ufam.icomp.ru_digital.entities.usuario.Usuario;
-import br.edu.ufam.icomp.ru_digital.entities.unidade.Ticket;
+import br.edu.ufam.icomp.ru_digital.entities.ticket.model.Ticket;
 import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "consumidor")
-public class Consumidor extends Usuario {
+public class Consumidor extends Usuario2 {
 
     @OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Ticket> tickets = new ArrayList<>();

@@ -1,12 +1,11 @@
 package br.edu.ufam.icomp.ru_digital.entities.usuario;
 
-import br.edu.ufam.icomp.ru_digital.entities.unidade.Unidade;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "admin_geral")
-public class AdminGeral extends Usuario {
+public class AdminGeral extends Usuario2 {
 
     // Construtores
     public AdminGeral() {

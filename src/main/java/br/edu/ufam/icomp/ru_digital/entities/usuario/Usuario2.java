@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED) // permite herança (ex.: Consumidor)
-public class Usuario {
+public class Usuario2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +35,10 @@ public class Usuario {
     }
 
     // Construtores
-    public Usuario() {
+    public Usuario2() {
     }
 
-    public Usuario(String nome, String email, String cpf, String senha, NivelPermissao nivelPermissao) {
+    public Usuario2(String nome, String email, String cpf, String senha, NivelPermissao nivelPermissao) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
