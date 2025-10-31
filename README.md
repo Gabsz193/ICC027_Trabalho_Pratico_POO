@@ -41,3 +41,11 @@ Universidade precisa gerenciar restaurantes universitários para direcionar o re
 * O Administrador do Restaurante quer cadastrar a comida da semana
 
 ---
+
+## Organização da equipe
+
+* Para cada feature do sistema, um integrante irá ficar responsável por uma camada, seguindo a arquitetura `MVC` com service layer, para mais detalhes, acesse [Introdução ao padrão MVC](https://www.devmedia.com.br/introducao-ao-padrao-mvc/29308).
+* A camada `Model` está na pasta `/entities/<model>.java`
+* A camada `View` ainda não está sendo usada pois se trata de UI, mas estará na pasta `/pages/<url-da-view>/<nome-view>.gsp`
+* A camada `Controller` está na pasta `/features/<feature>/<nome-controller>Controller.java`
+* A camada `Service` está na pasta `/features/<feature>/<nome-service>Service.java`

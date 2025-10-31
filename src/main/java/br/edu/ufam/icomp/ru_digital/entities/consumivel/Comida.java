@@ -1,7 +1,19 @@
 package br.edu.ufam.icomp.ru_digital.entities.consumivel;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("COMIDA")
 public class Comida extends Consumivel {
-    private double estoqueKg;
+
+    @Column
+    private Double estoqueKg;
+
+    public Comida() {
+        super();
+    }
 
     public Comida(String nome) {
         super(nome);
@@ -11,11 +23,11 @@ public class Comida extends Consumivel {
         super(nome, descricao);
     }
 
-    public double getEstoqueKg() {
+    public Double getEstoqueKg() {
         return estoqueKg;
     }
 
-    public void setEstoqueKg(double estoqueKg) {
+    public void setEstoqueKg(Double estoqueKg) {
         this.estoqueKg = estoqueKg;
     }
 }

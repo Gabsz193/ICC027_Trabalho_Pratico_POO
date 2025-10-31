@@ -1,6 +1,6 @@
 package br.edu.ufam.icomp.ru_digital.features.usuario;
 
-import br.edu.ufam.icomp.ru_digital.entities.usuario.Usuario;
+import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
