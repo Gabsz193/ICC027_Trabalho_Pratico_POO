@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RU Digital</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-container">
+            <h1>RU Digital</h1>
+            <h2>Faça seu login para continuar</h2>
+
+            <div th:if="${param.error}" class="alert alert-danger">
+                Usuário ou senha inválidos.
+            </div>
+
+            <div th:if="${param.logout}" class="alert alert-success">
+                Você foi desconectado com sucesso.
+            </div>
+
+            <div th:if="${param.registered}" class="alert alert-success">
+                Conta criada com sucesso! Faça seu login.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+
+                <div class="input-group">
+                    <label for="username">Usuário (Matrícula):</label>
+                    <input type="text" id="username" name="username" placeholder="Digite sua matrícula" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha:</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                        <span id="togglePassword" class="toggle-password">👁️</span>
+                    </div>
+                </div>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <div class="login-footer">
+                <a href="#">Esqueceu a senha?</a>
+                <span>|</span>
+                <a href="/register">Criar conta</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script th:src="@{/js/login.js}"></script>
+</body>
+</html>
