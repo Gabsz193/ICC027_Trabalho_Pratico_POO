@@ -13,8 +13,8 @@ public class AdminGeral extends Usuario {
         super();
     }
 
-    public AdminGeral(String nome, String email, String cpf, String senha) {
-        super(nome, email, cpf, senha);
+    public AdminGeral(String nome, String email, String cpf, String matricula, String password) {
+        super(nome, email, cpf, matricula, password);
     }
 
     /*

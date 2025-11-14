@@ -24,8 +24,8 @@ public class Funcionario extends Usuario {
         this.cargos = new ArrayList<>();
     }
 
-    public Funcionario(String nome, String cpf, String email, String matricula) {
-        super(nome, cpf, email, matricula);
+    public Funcionario(String nome, String cpf, String email, String matricula, String password) {
+        super(nome, cpf, email, matricula, password);
         this.cargos = new ArrayList<>();
     }
 

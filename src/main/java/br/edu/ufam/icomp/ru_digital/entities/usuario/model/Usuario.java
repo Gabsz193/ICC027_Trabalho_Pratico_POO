@@ -26,15 +26,19 @@ public class Usuario {
     @Column(nullable = false)
     private Long saldoCentavos = 0L;
 
+    @Column(nullable = false)
+    private String password;
+
     public Usuario() {
     }
 
-    public Usuario(String nome, String cpf, String email, String matricula) {
+    public Usuario(String nome, String cpf, String email, String matricula, String password) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.matricula = matricula;
         this.saldoCentavos = 0L;
+        this.password = password;
     }
 
     public Long getId() {
@@ -83,6 +87,14 @@ public class Usuario {
 
     public void setSaldoCentavos(Long saldoCentavos) {
         this.saldoCentavos = saldoCentavos;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

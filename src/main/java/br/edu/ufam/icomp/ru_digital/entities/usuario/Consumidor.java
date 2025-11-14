@@ -28,8 +28,8 @@ public class Consumidor extends Usuario {
         super();
     }
 
-    public Consumidor(String nome, String email, String cpf, String senha, TipoConsumidor tipo) {
-        super(nome, email, cpf, senha);
+    public Consumidor(String nome, String email, String cpf, String matricula, TipoConsumidor tipo, String password) {
+        super(nome, email, cpf, matricula, password);
         this.tipo = tipo;
     }
 
