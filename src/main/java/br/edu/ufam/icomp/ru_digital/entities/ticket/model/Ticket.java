@@ -61,10 +61,6 @@ public class Ticket {
     )
     private List<Consumivel> consumiveis;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consumidor_id", nullable = false)
-    private Consumidor consumidor;
-
     public Ticket() {
         this.dataCompra = LocalDateTime.now();
         this.status = StatusTicket.ATIVO;
@@ -97,14 +93,6 @@ public class Ticket {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Consumidor getConsumidor() {
-        return consumidor;
-    }
-
-    public void setConsumidor(Consumidor consumidor) {
-        this.consumidor = consumidor;
     }
 
     public TipoRefeicao getTipoRefeicao() {

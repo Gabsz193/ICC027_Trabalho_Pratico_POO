@@ -1,0 +1,151 @@
+# Usuários
+
+# Listar todos os usuários
+GET {{BASE_URL}}/usuarios
+
+###
+
+# Buscar por ID
+GET {{BASE_URL}}/usuarios/1
+
+###
+
+# Buscar por nome
+GET {{BASE_URL}}/usuarios/nome/Luiz Gabriel Antunes Sena
+
+###
+
+# Criar usuário (não dá pois precisa ser funcionário ou consumidor)
+POST {{BASE_URL}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Luiz Gabriel",
+  "cpf": "02752975279",
+  "email": "senaaluizgabriel@gmail.com",
+  "matricula": "20401905"
+}
+
+###
+
+#Adicionar Saldo
+POST {{BASE_URL}}/usuarios/1/saldo/adicionar?valor=500
+
+###
+
+# Funcionário
+
+# Listar todos os funcionários
+GET {{BASE_URL}}/funcionarios
+
+###
+
+# Buscar por ID
+GET {{BASE_URL}}/funcionarios/1
+
+###
+
+# Buscar por CPF
+GET {{BASE_URL}}/funcionarios/cpf/02752975279
+
+###
+
+# Criar usuário (não dá pois precisa ser funcionário ou consumidor)
+POST {{BASE_URL}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Luiz Gabriel",
+  "cpf": "02752975279",
+  "email": "senaaluizgabriel@gmail.com",
+  "matricula": "20401905",
+  "cargos": []
+}
+
+###
+
+# Unidades
+
+# Listar todas as unidades
+GET {{BASE_URL}}/unidades
+
+###
+
+# Buscar por ID
+GET {{BASE_URL}}/unidades/1
+
+###
+
+# Buscar por CPF
+GET {{BASE_URL}}/unidades/nome/RU Norte
+
+###
+
+# Criar unidade
+POST {{BASE_URL}}/unidades
+Content-Type: application/json
+
+{
+  "nome": "Luiz Gabriel",
+  "endereco": "Av. Universitária, 1000",
+  "cronograma": "Segunda a Sexta: 11h-14h e 17h-40h"
+}
+
+###
+
+# Refeições
+
+# Listar todas as refeições
+GET {{BASE_URL}}/refeicoes
+
+###
+
+# Buscar por ID
+GET {{BASE_URL}}/refeicoes/1
+
+###
+
+# Buscar por tipo
+GET {{BASE_URL}}/refeicoes/tipo/DESJEJUM
+
+###
+
+# Buscar por unidade
+GET {{BASE_URL}}/refeicoes/unidade/1
+
+###
+
+# Buscar por usuario
+GET {{BASE_URL}}/refeicoes/usuario/1
+
+###
+
+# Criar refeição
+POST {{BASE_URL}}/refeicoes
+Content-Type: application/json
+
+{
+  "nome": "Almoço completo",
+  "tipo": "ALMOCO",
+  "precoCentavos": 500,
+  "unidade": {
+    "id": 1
+  },
+  "consumiveis": []
+}
+
+###
+
+# Tickets
+
+# Comprar Ticket
+POST {{BASE_URL}}/tickets/comprar
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "tipoRefeicao": "ALMOCO",
+  "unidadeId": 1,
+  "funcionarioId": 1,
+  "precoCentavos": 500
+}

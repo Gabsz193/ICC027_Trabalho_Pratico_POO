@@ -1,20 +1,20 @@
 package br.edu.ufam.icomp.ru_digital.entities.usuario;
 
+import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "admin_geral")
-public class AdminGeral extends Usuario2 {
+public class AdminGeral extends Usuario {
 
     // Construtores
     public AdminGeral() {
         super();
-        this.setNivelPermissao(NivelPermissao.ALTO); // AdminGeral sempre tem alto nível
     }
 
     public AdminGeral(String nome, String email, String cpf, String senha) {
-        super(nome, email, cpf, senha, NivelPermissao.ALTO);
+        super(nome, email, cpf, senha);
     }
 
     /*
