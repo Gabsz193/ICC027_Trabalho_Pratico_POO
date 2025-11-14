@@ -40,8 +40,8 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
-        Usuario saved = usuarioService.save(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        Usuario novoUsuario = usuarioService.registrarUsuario(usuario);
+        return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

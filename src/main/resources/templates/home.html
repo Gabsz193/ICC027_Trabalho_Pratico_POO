@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Página Principal</title>
+    <title>Página Inicial</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
 </head>
 <body>
-    <h1>Boas-vindas à UFAM</h1>
-    <span th:text="${name}">Usuário!</span>
+    <div class="login-wrapper">
+        <div class="login-container">
+
+            <h2>Bem-vindo, <span sec:authentication="name">Usuário</span>!</h2>
+
+            <p>Você está logado no sistema RU Digital.</p>
+            <p>Seu nível de permissão é:
+                <strong sec:authentication="principal.authorities">[PERMISSAO]</strong>
+            </p>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Sair (Logout)</button>
+            </form>
+
+        </div>
+    </div>
 </body>
 </html>

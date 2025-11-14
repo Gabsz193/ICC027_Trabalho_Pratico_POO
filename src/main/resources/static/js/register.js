@@ -44,6 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
             password: formData.get('password')   // Veja a nota abaixo!
         };
 
+        const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
         // Desabilita o botão para evitar cliques duplos
         submitButton.disabled = true;
         submitButton.textContent = 'Registrando...';
@@ -53,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const response = await fetch('/api/usuarios', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    [header]: token
                 },
                 body: JSON.stringify(data)
             });

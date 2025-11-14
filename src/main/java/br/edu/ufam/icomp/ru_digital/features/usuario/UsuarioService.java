@@ -4,6 +4,8 @@ import br.edu.ufam.icomp.ru_digital.entities.usuario.model.Usuario;
 import br.edu.ufam.icomp.ru_digital.shared.exceptions.RecursoNaoEncontradoException;
 import br.edu.ufam.icomp.ru_digital.shared.exceptions.SaldoInsuficienteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +15,12 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Usuario> findAll() {
@@ -29,6 +33,22 @@ public class UsuarioService {
 
     public Optional<Usuario> findByNome(String nome) {
         return usuarioRepository.findByNome(nome);
+    }
+
+    public Usuario registrarUsuario(Usuario novoUsuario) {
+
+        // 1. Pega a senha em texto puro que veio da requisição
+        String senhaEmTextoPuro = novoUsuario.getPassword();
+
+        // 2. CRIPTOGRAFA a senha
+        String senhaHasheada = passwordEncoder.encode(senhaEmTextoPuro);
+
+        // 3. Define o HASH na entidade antes de salvar
+        novoUsuario.setPassword(senhaHasheada);
+
+        // As definições de saldo (0L) e permissão ("ROLE_ALUNO") já estão no Model, o que é ótimo!
+
+        return usuarioRepository.save(novoUsuario);
     }
 
     public Usuario save(Usuario usuario) {
