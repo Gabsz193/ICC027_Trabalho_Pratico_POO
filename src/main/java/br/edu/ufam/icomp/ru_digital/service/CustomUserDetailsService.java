@@ -16,9 +16,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String matricula) throws UsernameNotFoundException {
         // Busca o usuário pela matrícula (que definimos como "username")
-        return usuarioRepository.findByCpf(cpf)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com a matrícula: " + cpf));
+        return usuarioRepository.findByMatricula(matricula)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com a matrícula: " + matricula));
     }
 }

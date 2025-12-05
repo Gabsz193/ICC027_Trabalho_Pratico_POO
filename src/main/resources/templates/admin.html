@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-container" style="max-width: 1000px; width: 95%;">
+            <h2>Painel Administrativo</h2>
+            
+            <div th:if="${mensagem}" style="color: green; margin-bottom: 10px;">
+                <p th:text="${mensagem}"></p>
+            </div>
+            <div th:if="${erro}" style="color: red; margin-bottom: 10px;">
+                <p th:text="${erro}"></p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
+                <a th:href="@{/home}" style="text-decoration: none; color: #007bff;">&larr; Voltar para Home</a>
+                <button class="btn-add" onclick="openCreateUserModal()" style="background-color: #007bff;">Novo Usuário</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Matrícula</th>
+                        <th>Email</th>
+                        <th>Perfil</th>
+                        <th>Saldo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${usuarios}">
+                        <td th:text="${user.id}">1</td>
+                        <td th:text="${user.nome}">Nome</td>
+                        <td th:text="${user.matricula}">Matrícula</td>
+                        <td th:text="${user.email}">Email</td>
+                        <td th:text="${user.nivelPermissao}">ROLE_ALUNO</td>
+                        <td th:text="'R$ ' + ${#numbers.formatDecimal(user.saldoCentavos / 100.0, 1, 2)}">R$ 0,00</td>
+                        <td style="display: flex; justify-content: space-between; align-items: center; gap: 5px;">
+                            <button class="btn-add"
+                                    th:data-id="${user.id}"
+                                    th:data-nome="${user.nome}"
+                                    onclick="openModal(this)">
+                                Saldo
+                            </button>
+                            <button class="btn-add" style="background-color: #ffc107;"
+                                    th:data-id="${user.id}"
+                                    th:data-nome="${user.nome}"
+                                    th:data-cpf="${user.cpf}"
+                                    th:data-email="${user.email}"
+                                    th:data-matricula="${user.matricula}"
+                                    th:data-perfil="${user.nivelPermissao}"
+                                    onclick="openEditUserModal(this)">
+                                Editar
+                            </button>
+                            <button class="btn-add" style="background-color: #dc3545;"
+                                    th:data-id="${user.id}"
+                                    th:data-nome="${user.nome}"
+                                    onclick="openDeleteUserModal(this)">
+                                Excluir
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Adicionar Saldo -->
+    <div id="saldoModal" class="modal">
+        <div class="modal-content">
+            <h3>Adicionar Saldo</h3>
+            <p>Usuário: <span id="modalUserName"></span></p>
+            <form th:action="@{/admin/adicionar-saldo}" method="post">
+                <input type="hidden" name="usuarioId" id="modalUserId">
+                <label>
+                    Valor (R$):
+                    <input type="number" name="valor" step="0.01" min="0.01" required style="width: 100%; margin-bottom: 10px;">
+                </label>
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Confirmar</button>
+                    <button type="button" onclick="closeModal()" style="background-color: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Criar/Editar Usuário -->
+    <div id="userModal" class="modal">
+        <div class="modal-content" style="width: 400px;">
+            <h3 id="userModalTitle">Novo Usuário</h3>
+            <form id="userForm" method="post" th:action="@{/admin/criar-usuario}">
+                <input type="hidden" name="id" id="userId">
+                
+                <label>Nome: <input type="text" name="nome" id="userNome" required style="width: 100%; margin-bottom: 5px;"></label>
+                <label>CPF: <input type="text" name="cpf" id="userCpf" required style="width: 100%; margin-bottom: 5px;"></label>
+                <label>Email: <input type="email" name="email" id="userEmail" required style="width: 100%; margin-bottom: 5px;"></label>
+                <label>Matrícula: <input type="text" name="matricula" id="userMatricula" required style="width: 100%; margin-bottom: 5px;"></label>
+                <label>Senha: <input type="password" name="password" id="userPassword" style="width: 100%; margin-bottom: 5px;" placeholder="Deixe em branco para manter"></label>
+                <label>Perfil:
+                    <select name="nivelPermissao" id="userPerfil" style="width: 100%; margin-bottom: 10px;">
+                        <option value="ROLE_ALUNO">Aluno</option>
+                        <option value="ROLE_ADMIN">Admin</option>
+                    </select>
+                </label>
+
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Salvar</button>
+                    <button type="button" onclick="closeUserModal()" style="background-color: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Excluir Usuário -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>Excluir Usuário</h3>
+            <p>Tem certeza que deseja excluir <span id="deleteUserName"></span>?</p>
+            <form th:action="@{/admin/deletar-usuario}" method="post">
+                <input type="hidden" name="id" id="deleteUserId">
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Excluir</button>
+                    <button type="button" onclick="closeDeleteModal()" style="background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal Saldo
+        function openModal(element) {
+            const userId = element.dataset.id;
+            const userName = element.dataset.nome;
+            document.getElementById('modalUserId').value = userId;
+            document.getElementById('modalUserName').innerText = userName;
+            document.getElementById('saldoModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('saldoModal').style.display = 'none';
+        }
+
+        // Modal Usuário (Criar/Editar)
+        function openCreateUserModal() {
+            document.getElementById('userModalTitle').innerText = 'Novo Usuário';
+            document.getElementById('userForm').action = '/admin/criar-usuario';
+            document.getElementById('userId').value = '';
+            document.getElementById('userNome').value = '';
+            document.getElementById('userCpf').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('userMatricula').value = '';
+            document.getElementById('userPassword').required = true;
+            document.getElementById('userPassword').placeholder = 'Senha obrigatória';
+            document.getElementById('userPerfil').value = 'ROLE_ALUNO';
+            document.getElementById('userModal').style.display = 'flex';
+        }
+
+        function openEditUserModal(element) {
+            const id = element.dataset.id;
+            const nome = element.dataset.nome;
+            const cpf = element.dataset.cpf;
+            const email = element.dataset.email;
+            const matricula = element.dataset.matricula;
+            const perfil = element.dataset.perfil;
+
+            document.getElementById('userModalTitle').innerText = 'Editar Usuário';
+            document.getElementById('userForm').action = '/admin/atualizar-usuario';
+            document.getElementById('userId').value = id;
+            document.getElementById('userNome').value = nome;
+            document.getElementById('userCpf').value = cpf;
+            document.getElementById('userEmail').value = email;
+            document.getElementById('userMatricula').value = matricula;
+            document.getElementById('userPassword').required = false;
+            document.getElementById('userPassword').placeholder = 'Deixe em branco para manter';
+            document.getElementById('userPerfil').value = perfil;
+            document.getElementById('userModal').style.display = 'flex';
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+
+        // Modal Excluir
+        function openDeleteUserModal(element) {
+            const id = element.dataset.id;
+            const nome = element.dataset.nome;
+            
+            document.getElementById('deleteUserId').value = id;
+            document.getElementById('deleteUserName').innerText = nome;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        // Fechar modal se clicar fora
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -35,8 +35,11 @@ public class UsuarioService {
         return usuarioRepository.findByNome(nome);
     }
 
-    public Usuario registrarUsuario(Usuario novoUsuario) {
+    public Optional<Usuario> findByMatricula(String matricula) {
+        return usuarioRepository.findByMatricula(matricula);
+    }
 
+    public Usuario registrarUsuario(Usuario novoUsuario) {
         // 1. Pega a senha em texto puro que veio da requisição
         String senhaEmTextoPuro = novoUsuario.getPassword();
 
@@ -46,9 +49,21 @@ public class UsuarioService {
         // 3. Define o HASH na entidade antes de salvar
         novoUsuario.setPassword(senhaHasheada);
 
-        // As definições de saldo (0L) e permissão ("ROLE_ALUNO") já estão no Model, o que é ótimo!
-
         return usuarioRepository.save(novoUsuario);
+    }
+
+    public Usuario salvarUsuario(Usuario usuario) {
+        // Se for um update (tem ID) e a senha estiver vazia, mantemos a antiga
+        if (usuario.getId() != null && (usuario.getPassword() == null || usuario.getPassword().isEmpty())) {
+            Usuario usuarioAntigo = usuarioRepository.findById(usuario.getId())
+                    .orElseThrow(() -> new RecursoNaoEncontradoException("Usuario", usuario.getId()));
+            usuario.setPassword(usuarioAntigo.getPassword());
+        } else if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            // Se tem senha nova (ou é novo usuário), criptografa
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
+
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario save(Usuario usuario) {
